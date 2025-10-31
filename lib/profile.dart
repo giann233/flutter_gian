@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -9,10 +10,10 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> {
   bool _isEditing = false;
-  final _nameController = TextEditingController(text: 'John Doe');
-  final _emailController = TextEditingController(text: 'john.doe@example.com');
-  final _phoneController = TextEditingController(text: '+62 812-3456-7890');
-  final _addressController = TextEditingController(text: 'Jakarta, Indonesia');
+  final _nameController = TextEditingController(text: 'gian');
+  final _emailController = TextEditingController(text: 'gian@gmail.como');
+  final _phoneController = TextEditingController(text: '+6285156542178');
+  final _addressController = TextEditingController(text: 'cikunir');
 
   @override
   void dispose() {
@@ -34,12 +35,12 @@ class _ProfileTabState extends State<ProfileTab> {
             Container(
               height: 250,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.blue[800]!,
-                    Colors.blue[600]!,
+                    Color(0xFF6366F1),
+                    Color(0xFF8B5CF6),
                   ],
                 ),
                 borderRadius: const BorderRadius.only(
@@ -69,13 +70,13 @@ class _ProfileTabState extends State<ProfileTab> {
                           ),
                         ],
                       ),
-                      child: const CircleAvatar(
+                        child: const CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.white,
                         child: Icon(
                           Icons.person,
                           size: 60,
-                          color: Colors.blue,
+                          color: Color(0xFF6366F1),
                         ),
                       ),
                     ),
@@ -129,7 +130,7 @@ class _ProfileTabState extends State<ProfileTab> {
                           IconButton(
                             icon: Icon(
                               _isEditing ? Icons.save : Icons.edit,
-                              color: Colors.blue,
+                              color: const Color(0xFF6366F1),
                             ),
                             onPressed: () {
                               setState(() {
@@ -149,6 +150,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         label: 'Nama Lengkap',
                         controller: _nameController,
                         enabled: _isEditing,
+                        color: const Color(0xFF6366F1),
                       ),
                       const SizedBox(height: 16),
                       // Email Field
@@ -157,6 +159,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         label: 'Email',
                         controller: _emailController,
                         enabled: _isEditing,
+                        color: const Color(0xFF6366F1),
                       ),
                       const SizedBox(height: 16),
                       // Phone Field
@@ -165,6 +168,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         label: 'Nomor Telepon',
                         controller: _phoneController,
                         enabled: _isEditing,
+                        color: const Color(0xFF6366F1),
                       ),
                       const SizedBox(height: 16),
                       // Address Field
@@ -174,6 +178,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         controller: _addressController,
                         enabled: _isEditing,
                         maxLines: 2,
+                        color: const Color(0xFF6366F1),
                       ),
                     ],
                   ),
@@ -205,9 +210,9 @@ class _ProfileTabState extends State<ProfileTab> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _buildStatItem('Pesanan', '12'),
-                          _buildStatItem('Ulasan', '24'),
-                          _buildStatItem('Poin', '350'),
+                          _buildStatItem('Pesanan', '12', const Color(0xFF6366F1)),
+                          _buildStatItem('Ulasan', '24', const Color(0xFF8B5CF6)),
+                          _buildStatItem('Poin', '350', const Color(0xFFEC4899)),
                         ],
                       ),
                     ],
@@ -225,18 +230,21 @@ class _ProfileTabState extends State<ProfileTab> {
                     'Pengaturan Akun',
                     Icons.settings,
                     () {},
+                    color: const Color(0xFF6366F1),
                   ),
                   const SizedBox(height: 10),
                   _buildActionButton(
                     'Riwayat Pesanan',
                     Icons.history,
                     () {},
+                    color: const Color(0xFF8B5CF6),
                   ),
                   const SizedBox(height: 10),
                   _buildActionButton(
                     'Kebijakan Privasi',
                     Icons.privacy_tip,
                     () {},
+                    color: const Color(0xFFEC4899),
                   ),
                   const SizedBox(height: 10),
                   _buildActionButton(
@@ -256,7 +264,13 @@ class _ProfileTabState extends State<ProfileTab> {
                             TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
-                                // Navigate to login page
+                                // Navigate back to login page
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 'Keluar',
@@ -285,6 +299,7 @@ class _ProfileTabState extends State<ProfileTab> {
     required TextEditingController controller,
     bool enabled = false,
     int maxLines = 1,
+    Color color = const Color(0xFF6366F1),
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,7 +317,7 @@ class _ProfileTabState extends State<ProfileTab> {
           enabled: enabled,
           maxLines: maxLines,
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, color: Colors.blue),
+            prefixIcon: Icon(icon, color: color),
             border: enabled
                 ? OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -322,15 +337,15 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
-  Widget _buildStatItem(String label, String value) {
+  Widget _buildStatItem(String label, String value, Color color) {
     return Column(
       children: [
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.blue,
+            color: color,
           ),
         ),
         const SizedBox(height: 4),
